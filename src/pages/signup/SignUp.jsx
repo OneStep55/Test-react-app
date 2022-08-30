@@ -1,9 +1,11 @@
 import React from 'react'
 import { useState } from 'react'
-import { useDispatch } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 import { addUser } from '../../store/userSlice'
 import { Link, useNavigate } from 'react-router-dom'
 import './SignUp.css'
+
+// Function for register new user
 export const SignUp = () => {
 
     const dispatch = useDispatch()
@@ -13,7 +15,13 @@ export const SignUp = () => {
     const [password, setPassword] = useState('')
     const [error, setError] = useState('')
 
+    // get  all registred users from store
+    const users = useSelector(state => state.users.users)
+    
+
     const navigate = useNavigate()
+
+    // Check input data and add new user to UserSlice
 
     const handleSubmit = (e) => {
       e.preventDefault()
@@ -29,22 +37,25 @@ export const SignUp = () => {
         setError('Name is requred')
         return
       }
+  
       setError('')
+
+      // create new user object usnig input values
       var user = {
+        id : users.length + 1,
         name,
         lastName,
         email,
         password
       }
 
-      
-
+      // dispatch addUser function in userSlice
       dispatch(addUser(user))
       navigate('/login')
     }
   return (
     <div className='signup-box'>
-        <h1 className='text-2xl bold'>Sign Up</h1>
+        <h1 className='text-2xl font-bold'>Sign Up</h1>
 
         <form onSubmit={(e) => handleSubmit(e)}>
             <label htmlFor="">First Name</label>
@@ -71,12 +82,13 @@ export const SignUp = () => {
             value = {password}
             onChange = {(e) => setPassword(e.target.value)} />
 
+        
             {error && <p className='error'>{error}</p>}
 
-            <button className='rounded'>SignUp</button>
+            <button className='rounded btn-green'>SignUp</button>
         </form>
 
-        <p>Already have an account? <Link to ='/login' >SignIn</Link></p>
+        <p className='m-5 '>Already have an account?  <Link to ='/login' className=' text-blue-400 underline' > Login</Link></p>
     </div>
   )
 }

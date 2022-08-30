@@ -43,7 +43,7 @@ form input {
     border-radius: 5px;
 }
 
-button {
+.btn-green {
     width: 300px;
     height:30px;
     margin-top: 20px;
@@ -55,3 +55,4 @@ button {
 .error {
     color:red;
 }
+

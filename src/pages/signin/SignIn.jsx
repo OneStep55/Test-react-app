@@ -11,17 +11,19 @@ export const SignIn = () => {
   const [email, setEmail] = useState('')
   const[password, setPassword] = useState('')
   const[error, setError] = useState('')
-  const loggedIn = useSelector(state => state.users.loggedIn)
   const  dispatch = useDispatch()
   const navigation = useNavigate()
   
 
+  // check input values and dispatch login function in userSlice if everything is ok
   function handleSubmit (e) {
     e.preventDefault()
     var userExist = false
     users.map(user => {
+      // if there is user with given email then users exist
       if (user.email === email) {
         userExist = true
+        // if password is correct user can login
         if (user.password === password) {
           dispatch(login())
           setError('')
@@ -40,7 +42,7 @@ export const SignIn = () => {
   }
   return (
     <div className='signin-box'>
-    <h1>Sign In</h1>
+    <h1 className='text-2xl font-bold'>Sign In</h1>
 
     <form onSubmit={(e) => handleSubmit(e)}>
 
@@ -59,10 +61,10 @@ export const SignIn = () => {
 
         {error && <p className='error'>{error}</p>}
 
-        <button className='rounded'>Sign in</button>
+        <button className='rounded btn-green'>Sign in</button>
     </form>
 
-    <p>Dont have an account? <Link to ='/' >SignUp</Link></p>
+    <p className='m-5 '>Dont have an account? <Link to ='/signup' className=' text-blue-400 underline'>Sign Up</Link></p>
 </div>
   )
 }

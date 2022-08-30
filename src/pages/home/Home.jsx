@@ -1,52 +1,72 @@
 import React, { useEffect, useState } from 'react'
-import axios from 'axios'
-import userSlice from '../../store/userSlice'
+import { fetchUsers } from '../../store/userSlice'
+import './homepage.css'
 import { Navigation } from '../../components/Navigation'
-
-export const Home = () => {
-    const [users, setUsers] = useState([])
-    const [error, setError] = useState('')
-
-    async function fetchUsers() {
-
-      try {
-          setError('')
-          const res = await axios.get('https://reqres.in/api/users?page=2')
-          console.log(res.data.data)
-          setUsers(res.data.data)
+import { useDispatch, useSelector } from 'react-redux'
+import { useNavigate } from 'react-router-dom'
 
 
-      } catch (err) {
-          setError(err.message)
-      }
 
-  }
+export const Home = ({ navigation }) => {
 
-    useEffect(() => {
-      fetchUsers()
-    }, [])
+
+  // take all registred users from store
+  const registredUsers = useSelector(state => state.users.users)
+  // take all users loaded from url
+  const users = useSelector(state => state.users.loadedUsers)
+  const dispatch = useDispatch()
+  const navigate = useNavigate()
+
+  // disptach fetchUsers function that fethc users from url when page is loaded
+  useEffect(() => {
+    dispatch(fetchUsers())
     
+  }, [])
+
   return (
     <div>
-      <Navigation/>
-        <h1>Users</h1>
-
-        <div className='users-container'>
+      <Navigation />
+      <h2 className='m-5 bold'>User info</h2>
+      <div >
         {
-            users.map(user => {
-                return (
-                  <div key={user.id} className='m-3'>
-                  <img src={user.avatar} alt="avatar" />
-                  <p>{user.first_name}</p>
-                  <p>{user.last_name}</p>
-                  <p>{user.email}</p>
-                  </div>
-                )
-                
-        })
-        
+          registredUsers.map(user => {
+            return (
+      
+              <div key={user.id} className='m-5'>
+                <p>Name: {user.name}</p>
+                <p>Last name: {user.lastName}</p>
+                <p>Email: {user.email}</p>
+              </div>
+            )
+          })
         }
-        </div>
+      </div>
+
+      <h2 className=' text-center bold'>Users</h2>
+      <div className='users-container'>
+        {
+          users.map(user => {
+            return (
+              <div key={user.id} className='m-3 block py-3 px-5 rounded-lg shadow-lg bg-white max-w-sm'>
+                <img className='avatar' src={user.avatar} alt="avatar" />
+                <p>{user.first_name}</p>
+
+
+                <button className=' bg-gray-400 border-2 py-1 px-2 mt-3' onClick={() => {
+                          // navigate to User Details page and pass user to it
+                          navigate("/user", { state: { user } });
+                        }}>View</button>
+
+                      
+
+
+
+              </div>
+            )
+
+          })
+        }
+      </div>
     </div>
   )
 }

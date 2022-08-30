@@ -8,7 +8,8 @@ import { BrowserRouter } from 'react-router-dom';
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
-
+  // use provider from redux to accsess store in all parts aplications
+  //use BrowsweRouter for routing
   <React.StrictMode>
     <BrowserRouter>
     <Provider store={store}>
