@@ -5,7 +5,6 @@ import { SignUp } from './signup/SignUp'
 import { useSelector } from 'react-redux'
 import { Home } from './home/Home'
 import { NotFound } from './notfound/NotFound'
-import { UserPage } from './userpage/UserPage'
 import { UserDetails } from './user-details/UserDetails'
 
 
