@@ -6,7 +6,7 @@ To run this project you will need node js installed in your machine
 
 
 In the project directory, you can run:
-### 'npm i'
+### `npm i`
 To install all dependencies
 
 
