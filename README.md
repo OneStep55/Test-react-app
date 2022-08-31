@@ -2,7 +2,7 @@
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
-To run this project you will need node js installnet in your machine
+To run this project you will need node js installed in your machine
 
 
 In the project directory, you can run:
